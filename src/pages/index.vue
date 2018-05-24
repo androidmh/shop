@@ -18,12 +18,13 @@
         <h2>最新消息</h2>
         <ul>
           <li v-for="item in newsList" :key="item.value">
-            <a :href="item.url">{{item.title}}</a>
+            <a :href="item.url" class="new-item">{{item.title}}</a>
           </li>
         </ul>
       </div>
     </div>
     <div class="index-right">
+      <slide-show :slides="slides"></slide-show>
       <div class="index-board-list">
         <div class="index-board-item" v-for="(item, index) in boardList" :key="item.value" :class="[{'line-last' : index % 2 !== 0}, 'index-board-' + item.id]">
           <div class="index-board-item-inner">
@@ -39,18 +40,47 @@
   </div>
 </template>
 
-<script>export default {
+<script>
+import slideShow from '../components/slideShow'
+export default {
+  components: {
+    slideShow
+  },
+  comments: {
+    slideShow
+  },
   created: function () {
-    this.$http.get('api/getNewsList?t=' + new Date().getTime().toString())
+    this.$http.get('api/getNewsList')
       .then((data) => {
         this.newsList = data.body
-        console.log(data)
       }, (err) => {
         console.log(err)
       })
   },
   data () {
     return {
+      slides: [
+        {
+          src: require('../assets/slideShow/pic1.jpg'),
+          title: 'xxx1',
+          href: 'detail/analysis'
+        },
+        {
+          src: require('../assets/slideShow/pic2.jpg'),
+          title: 'xxx2',
+          href: 'detail/count'
+        },
+        {
+          src: require('../assets/slideShow/pic3.jpg'),
+          title: 'xxx3',
+          href: 'http://xxx.xxx.com'
+        },
+        {
+          src: require('../assets/slideShow/pic4.jpg'),
+          title: 'xxx4',
+          href: 'detail/forecast'
+        }
+      ],
       boardList: [
         {
           title: '开放产品',
@@ -221,10 +251,14 @@
     color: #fff;
   }
   .new-item {
+    /*强制为块级元素*/
     display: inline-block;
     width: 230px;
+    /*超出部分隐藏*/
     overflow: hidden;
+    /*超出部分省略*/
     text-overflow: ellipsis;
+    /*不允许换行*/
     white-space: nowrap;
   }
 </style>

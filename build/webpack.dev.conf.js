@@ -9,9 +9,24 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const express = require('express')
+
+//lowdb配置
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('cc.json')
+const db = low(adapter)
+db.defaults({ posts: [], user: {} })
+  .write()
+
+db.get('posts')
+  .push({ id: 1, title: 'lowdb is awesome'})
+  .write()
+
 //JsonServer配置
 const jsonServer = require('json-server')
 const apiServer = jsonServer.create()
+// const apiRouter = jsonServer.router('db.json')
 const apiRouter = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 apiServer.use(middlewares)
@@ -22,7 +37,6 @@ apiServer.listen(8081, () => {
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })

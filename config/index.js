@@ -8,9 +8,12 @@ module.exports = {
   dev: {
 
     // Paths
+    env: require('./dev.env'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': 'http://localhost:8081'
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

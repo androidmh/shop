@@ -41,10 +41,11 @@
 
 <script>export default {
   created: function () {
-    this.$http.get('http://ts.dliangzao.com/api/version/Get')
-      .then(function (data) {
+    this.$http.get('api/getNewsList?t=' + new Date().getTime().toString())
+      .then((data) => {
+        this.newsList = data.body
         console.log(data)
-      }, function (err) {
+      }, (err) => {
         console.log(err)
       })
   },
@@ -80,25 +81,7 @@
           saleout: false
         }
       ],
-      newsList: [
-        {
-          title: '数据统计',
-          url: 'http://starcraft.com'
-        },
-        {
-          title: '数据预测',
-          url: 'http://warcraft.com'
-        },
-        {
-          title: '流量分析',
-          url: 'http://overwatch.com',
-          hot: true
-        },
-        {
-          title: '广告发布',
-          url: 'http://hearstone.com'
-        }
-      ],
+      newsList: [],
       productList: {
         pc: {
           title: 'PC产品',

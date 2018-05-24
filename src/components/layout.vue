@@ -15,17 +15,19 @@
       </div>
   </div>
     <div class="app-content">
+      <!--缓存-->
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
     </div>
     <div class="app-foot">
-      <p>© 2016 fishenal MIT</p>
+      <p>© 2018 fishenal MIT</p>
     </div>
   </div>
 </template>
 
-<script>export default {
+<script>
+export default {
   data () {
     return {
     }

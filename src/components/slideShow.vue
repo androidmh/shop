@@ -64,6 +64,7 @@ export default {
       setTimeout(() => {
         this.isShow = true
         this.nowIndex = index
+        this.$emit('onchange', index)
       }, 10)
     },
     runInv () {
